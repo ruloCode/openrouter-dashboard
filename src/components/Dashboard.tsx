@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { ApiKey, listKeys } from '@/lib/openrouter';
 import { clearStoredApiKey } from '@/lib/storage';
 import SummaryCards from './SummaryCards';
+import CreditsBars from './CreditsBars';
 import KeysTable from './KeysTable';
 import CreateKeyDialog from './CreateKeyDialog';
 import EditKeyDialog from './EditKeyDialog';
@@ -109,6 +110,9 @@ export default function Dashboard({ apiKey, onLogout }: DashboardProps) {
       <main className="max-w-screen-2xl mx-auto px-4 sm:px-6 py-6 space-y-6">
         {/* Summary Cards */}
         <SummaryCards keys={keys} />
+
+        {/* Credits Bars */}
+        <CreditsBars keys={keys} />
 
         {/* Controls */}
         <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center justify-between">
