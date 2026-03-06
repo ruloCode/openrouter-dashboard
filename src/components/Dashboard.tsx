@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { ApiKey, listKeys } from '@/lib/openrouter';
+import { ApiKey, CreditsData, listKeys, getCredits } from '@/lib/openrouter';
 import { clearStoredApiKey } from '@/lib/storage';
 import SummaryCards from './SummaryCards';
 import CreditsBars from './CreditsBars';
@@ -23,6 +23,7 @@ const REFRESH_INTERVAL = 30000;
 
 export default function Dashboard({ apiKey, onLogout }: DashboardProps) {
   const [keys, setKeys] = useState<ApiKey[]>([]);
+  const [credits, setCredits] = useState<CreditsData | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [search, setSearch] = useState('');
@@ -34,29 +35,37 @@ export default function Dashboard({ apiKey, onLogout }: DashboardProps) {
   const [lastRefresh, setLastRefresh] = useState<Date>(new Date());
   const intervalRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const fetchKeys = useCallback(async (currentOffset = offset) => {
+  const fetchData = useCallback(async (currentOffset = offset) => {
     setLoading(true);
     setError('');
     try {
-      const res = await listKeys(apiKey, currentOffset);
-      setKeys(res.data || []);
-      setHasMore((res.data || []).length === PAGE_SIZE);
+      const [keysResult, creditsResult] = await Promise.allSettled([
+        listKeys(apiKey, currentOffset),
+        getCredits(apiKey),
+      ]);
+      if (keysResult.status === 'fulfilled') {
+        setKeys(keysResult.value.data || []);
+        setHasMore((keysResult.value.data || []).length === PAGE_SIZE);
+      } else {
+        setError(keysResult.reason instanceof Error ? keysResult.reason.message : 'Failed to fetch keys');
+      }
+      if (creditsResult.status === 'fulfilled') {
+        setCredits(creditsResult.value.data);
+      }
       setLastRefresh(new Date());
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to fetch keys');
     } finally {
       setLoading(false);
     }
   }, [apiKey, offset]);
 
   useEffect(() => {
-    fetchKeys(offset);
+    fetchData(offset);
   }, [offset]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    intervalRef.current = setInterval(() => fetchKeys(offset), REFRESH_INTERVAL);
+    intervalRef.current = setInterval(() => fetchData(offset), REFRESH_INTERVAL);
     return () => { if (intervalRef.current) clearInterval(intervalRef.current); };
-  }, [fetchKeys, offset]);
+  }, [fetchData, offset]);
 
   const filteredKeys = keys.filter((k) =>
     !search || k.name?.toLowerCase().includes(search.toLowerCase())
@@ -87,7 +96,7 @@ export default function Dashboard({ apiKey, onLogout }: DashboardProps) {
             <Button
               variant="ghost"
               size="sm"
-              onClick={() => fetchKeys(offset)}
+              onClick={() => fetchData(offset)}
               disabled={loading}
               className="text-zinc-400 hover:text-white hover:bg-zinc-800"
             >
@@ -109,10 +118,10 @@ export default function Dashboard({ apiKey, onLogout }: DashboardProps) {
 
       <main className="max-w-screen-2xl mx-auto px-4 sm:px-6 py-6 space-y-6">
         {/* Summary Cards */}
-        <SummaryCards keys={keys} />
+        <SummaryCards keys={keys} credits={credits} />
 
         {/* Credits Bars */}
-        <CreditsBars keys={keys} />
+        <CreditsBars keys={keys} credits={credits} />
 
         {/* Controls */}
         <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center justify-between">
@@ -184,21 +193,21 @@ export default function Dashboard({ apiKey, onLogout }: DashboardProps) {
         open={createOpen}
         onOpenChange={setCreateOpen}
         apiKey={apiKey}
-        onCreated={() => fetchKeys(offset)}
+        onCreated={() => fetchData(offset)}
       />
       <EditKeyDialog
         open={!!editKey}
         onOpenChange={(open) => { if (!open) setEditKey(null); }}
         apiKey={apiKey}
         keyData={editKey}
-        onUpdated={() => fetchKeys(offset)}
+        onUpdated={() => fetchData(offset)}
       />
       <DeleteConfirmDialog
         open={!!deleteKey}
         onOpenChange={(open) => { if (!open) setDeleteKey(null); }}
         apiKey={apiKey}
         keyData={deleteKey}
-        onDeleted={() => fetchKeys(offset)}
+        onDeleted={() => fetchData(offset)}
       />
     </div>
   );

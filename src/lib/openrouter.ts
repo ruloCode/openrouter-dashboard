@@ -66,3 +66,19 @@ export async function deleteKey(token: string, hash: string): Promise<void> {
   });
   if (!res.ok) throw new Error(`Failed to delete key: ${res.statusText}`);
 }
+
+// Credits API
+export const OPENROUTER_CREDITS_URL = 'https://openrouter.ai/api/v1/credits';
+
+export interface CreditsData {
+  total_credits: number;
+  total_usage: number;
+}
+
+export async function getCredits(token: string): Promise<{ data: CreditsData }> {
+  const res = await fetch(OPENROUTER_CREDITS_URL, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  if (!res.ok) throw new Error(`Failed to fetch credits: ${res.statusText}`);
+  return res.json();
+}

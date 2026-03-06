@@ -1,18 +1,21 @@
 'use client';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ApiKey } from '@/lib/openrouter';
+import { ApiKey, CreditsData } from '@/lib/openrouter';
 import { Key, CheckCircle, TrendingUp, Wallet } from 'lucide-react';
 
 interface SummaryCardsProps {
   keys: ApiKey[];
+  credits: CreditsData | null;
 }
 
-export default function SummaryCards({ keys }: SummaryCardsProps) {
+export default function SummaryCards({ keys, credits }: SummaryCardsProps) {
   const totalKeys = keys.length;
   const activeKeys = keys.filter((k) => !k.disabled).length;
   const totalUsage = keys.reduce((sum, k) => sum + (k.usage || 0), 0);
-  const totalLimitRemaining = keys.reduce((sum, k) => sum + (k.limit_remaining || 0), 0);
+
+  const accountBalance = credits ? credits.total_credits - credits.total_usage : null;
+  const balanceLow = accountBalance !== null && accountBalance < 10;
 
   const cards = [
     {
@@ -40,12 +43,12 @@ export default function SummaryCards({ keys }: SummaryCardsProps) {
       border: 'border-blue-500/20',
     },
     {
-      title: 'Limit Remaining',
-      value: `$${totalLimitRemaining.toFixed(4)}`,
+      title: 'Account Balance',
+      value: accountBalance !== null ? `$${accountBalance.toFixed(4)}` : '---',
       icon: Wallet,
-      color: 'text-amber-400',
-      bg: 'bg-amber-600/10',
-      border: 'border-amber-500/20',
+      color: accountBalance !== null ? (balanceLow ? 'text-red-400' : 'text-amber-400') : 'text-zinc-500',
+      bg: accountBalance !== null ? (balanceLow ? 'bg-red-600/10' : 'bg-amber-600/10') : 'bg-zinc-800/50',
+      border: accountBalance !== null ? (balanceLow ? 'border-red-500/20' : 'border-amber-500/20') : 'border-zinc-700/20',
     },
   ];
 
