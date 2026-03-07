@@ -22,7 +22,17 @@ function fmtUsd(val: number) {
   return `$${val.toFixed(4)}`;
 }
 
-export default function ModelUsageTable({ activity }: { activity: ActivityItem[] }) {
+interface ModelUsageTableProps {
+  activity: ActivityItem[];
+  selectedDate?: string | null;
+}
+
+function formatShortDate(dateStr: string) {
+  const d = new Date(dateStr + 'T00:00:00');
+  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+}
+
+export default function ModelUsageTable({ activity, selectedDate }: ModelUsageTableProps) {
   const models = useMemo(() => {
     const map = new Map<string, ModelRow>();
 
@@ -51,13 +61,17 @@ export default function ModelUsageTable({ activity }: { activity: ActivityItem[]
     return Array.from(map.values()).sort((a, b) => b.cost - a.cost);
   }, [activity]);
 
+  const heading = selectedDate ? `Models on ${formatShortDate(selectedDate)}` : 'Account Models';
+
   if (models.length === 0) {
     return (
       <div className="rounded-xl border border-zinc-800 bg-zinc-900/60 backdrop-blur-sm p-6">
         <h3 className="text-sm font-semibold text-zinc-400 uppercase tracking-wide mb-4">
-          Account Models
+          {heading}
         </h3>
-        <div className="text-center py-8 text-zinc-500">No model usage data available.</div>
+        <div className="text-center py-8 text-zinc-500">
+          {selectedDate ? 'No model usage on this day.' : 'No model usage data available.'}
+        </div>
       </div>
     );
   }
@@ -68,7 +82,7 @@ export default function ModelUsageTable({ activity }: { activity: ActivityItem[]
     <div className="rounded-xl border border-zinc-800 bg-zinc-900/60 backdrop-blur-sm p-6">
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-sm font-semibold text-zinc-400 uppercase tracking-wide">
-          Account Models
+          {heading}
         </h3>
         <span className="text-xs text-zinc-500">{models.length} model{models.length !== 1 ? 's' : ''}</span>
       </div>

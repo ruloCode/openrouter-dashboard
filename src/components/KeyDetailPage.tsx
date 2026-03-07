@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useMemo } from 'react';
 import Link from 'next/link';
 import { Badge } from '@/components/ui/badge';
 import { ApiKey, ActivityItem } from '@/lib/openrouter';
@@ -29,6 +30,13 @@ interface KeyDetailPageProps {
 }
 
 export default function KeyDetailPage({ keyData, activity }: KeyDetailPageProps) {
+  const [selectedDate, setSelectedDate] = useState<string | null>(null);
+
+  const filteredActivity = useMemo(() => {
+    if (!selectedDate) return activity;
+    return activity.filter((item) => item.date.split(' ')[0] === selectedDate);
+  }, [activity, selectedDate]);
+
   return (
     <div className="min-h-screen bg-zinc-950 text-white">
       {/* Header */}
@@ -125,10 +133,10 @@ export default function KeyDetailPage({ keyData, activity }: KeyDetailPageProps)
         </div>
 
         {/* Activity Chart */}
-        <ActivityChart activity={activity} />
+        <ActivityChart activity={activity} selectedDate={selectedDate} onSelectDate={setSelectedDate} />
 
         {/* Model Usage Table */}
-        <ModelUsageTable activity={activity} />
+        <ModelUsageTable activity={filteredActivity} selectedDate={selectedDate} />
       </main>
     </div>
   );
