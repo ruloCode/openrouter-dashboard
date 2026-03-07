@@ -1,14 +1,16 @@
 'use client';
 
-import { useState, useEffect, use } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState, useEffect } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { getStoredApiKey } from '@/lib/storage';
 import { listKeys, getActivity, ApiKey, ActivityItem } from '@/lib/openrouter';
 import { slugify } from '@/lib/utils';
 import KeyDetailPage from '@/components/KeyDetailPage';
+import { Suspense } from 'react';
 
-export default function KeyDetailRoute({ params }: { params: Promise<{ keyName: string }> }) {
-  const { keyName } = use(params);
+function KeyPageContent() {
+  const searchParams = useSearchParams();
+  const keyName = searchParams.get('name') || '';
   const router = useRouter();
   const [keyData, setKeyData] = useState<ApiKey | null>(null);
   const [activity, setActivity] = useState<ActivityItem[]>([]);
@@ -26,8 +28,8 @@ export default function KeyDetailRoute({ params }: { params: Promise<{ keyName: 
       setLoading(true);
       try {
         const [keysResult, activityResult] = await Promise.allSettled([
-          listKeys(token),
-          getActivity(token),
+          listKeys(token!),
+          getActivity(token!),
         ]);
 
         if (keysResult.status === 'rejected') {
@@ -88,4 +90,19 @@ export default function KeyDetailRoute({ params }: { params: Promise<{ keyName: 
   }
 
   return <KeyDetailPage keyData={keyData} activity={activity} />;
+}
+
+export default function KeyPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-zinc-950 flex items-center justify-center">
+        <div className="flex items-center gap-3">
+          <div className="w-5 h-5 border-2 border-violet-500 border-t-transparent rounded-full animate-spin" />
+          <span className="text-zinc-400">Loading...</span>
+        </div>
+      </div>
+    }>
+      <KeyPageContent />
+    </Suspense>
+  );
 }

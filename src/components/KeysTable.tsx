@@ -63,7 +63,7 @@ export default function KeysTable({ keys, onEdit, onDelete }: KeysTableProps) {
               <TableCell className="font-medium max-w-[150px] truncate">
                 {key.name ? (
                   <Link
-                    href={`/${slugify(key.name)}`}
+                    href={`/key?name=${encodeURIComponent(slugify(key.name))}`}
                     className="text-white hover:text-violet-400 transition-colors"
                   >
                     {key.name}
