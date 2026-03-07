@@ -249,7 +249,7 @@ export default function CreditsBars({ keys, credits }: CreditsBarProps) {
                 <div className="flex items-center justify-between gap-2">
                   {key.name ? (
                     <Link
-                      href={`/${slugify(key.name)}`}
+                      href={`/key?name=${encodeURIComponent(slugify(key.name))}`}
                       className="text-sm font-semibold text-white truncate flex-1 hover:text-violet-400 transition-colors"
                       title={key.name}
                     >
