@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { getStoredApiKey } from '@/lib/storage';
 import { listKeys, getActivity, ApiKey, ActivityItem } from '@/lib/openrouter';
@@ -15,52 +15,61 @@ function KeyPageContent() {
   const [keyData, setKeyData] = useState<ApiKey | null>(null);
   const [activity, setActivity] = useState<ActivityItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const [syncing, setSyncing] = useState(false);
   const [error, setError] = useState('');
+  const initialLoadDone = useRef(false);
 
-  useEffect(() => {
+  const fetchData = useCallback(async () => {
     const token = getStoredApiKey();
     if (!token) {
       router.replace('/');
       return;
     }
 
-    async function fetchData() {
+    if (initialLoadDone.current) {
+      setSyncing(true);
+    } else {
       setLoading(true);
-      try {
-        const [keysResult, activityResult] = await Promise.allSettled([
-          listKeys(token!),
-          getActivity(token!),
-        ]);
-
-        if (keysResult.status === 'rejected') {
-          setError('Failed to fetch keys');
-          return;
-        }
-
-        const keys = keysResult.value.data || [];
-        const matched = keys.find(
-          (k) => slugify(k.name || '') === decodeURIComponent(keyName)
-        );
-
-        if (!matched) {
-          setError(`Key "${decodeURIComponent(keyName)}" not found`);
-          return;
-        }
-
-        setKeyData(matched);
-
-        if (activityResult.status === 'fulfilled') {
-          setActivity(activityResult.value.data || []);
-        }
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'An error occurred');
-      } finally {
-        setLoading(false);
-      }
     }
 
-    fetchData();
+    try {
+      const [keysResult, activityResult] = await Promise.allSettled([
+        listKeys(token),
+        getActivity(token),
+      ]);
+
+      if (keysResult.status === 'rejected') {
+        setError('Failed to fetch keys');
+        return;
+      }
+
+      const keys = keysResult.value.data || [];
+      const matched = keys.find(
+        (k) => slugify(k.name || '') === decodeURIComponent(keyName)
+      );
+
+      if (!matched) {
+        setError(`Key "${decodeURIComponent(keyName)}" not found`);
+        return;
+      }
+
+      setKeyData(matched);
+
+      if (activityResult.status === 'fulfilled') {
+        setActivity(activityResult.value.data || []);
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'An error occurred');
+    } finally {
+      setLoading(false);
+      setSyncing(false);
+      initialLoadDone.current = true;
+    }
   }, [keyName, router]);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
 
   if (loading) {
     return (
@@ -89,7 +98,7 @@ function KeyPageContent() {
     );
   }
 
-  return <KeyDetailPage keyData={keyData} activity={activity} />;
+  return <KeyDetailPage keyData={keyData} activity={activity} onSync={fetchData} syncing={syncing} />;
 }
 
 export default function KeyPage() {

@@ -1,13 +1,13 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import Link from 'next/link';
 import { Badge } from '@/components/ui/badge';
 import { ApiKey, ActivityItem } from '@/lib/openrouter';
 import UsageBreakdown from './UsageBreakdown';
 import ActivityChart from './ActivityChart';
 import ModelUsageTable from './ModelUsageTable';
-import { ArrowLeft, Hash, Tag, Calendar, Shield } from 'lucide-react';
+import { ArrowLeft, Hash, Tag, Calendar, Shield, RefreshCw } from 'lucide-react';
 
 function formatDate(dateStr: string): string {
   return new Date(dateStr).toLocaleDateString('en-US', {
@@ -27,10 +27,17 @@ function fmt(val: number | null | undefined): string {
 interface KeyDetailPageProps {
   keyData: ApiKey;
   activity: ActivityItem[];
+  onSync?: () => void;
+  syncing?: boolean;
 }
 
-export default function KeyDetailPage({ keyData, activity }: KeyDetailPageProps) {
+export default function KeyDetailPage({ keyData, activity, onSync, syncing }: KeyDetailPageProps) {
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
+  const [lastRefresh, setLastRefresh] = useState<Date>(new Date());
+
+  useEffect(() => {
+    setLastRefresh(new Date());
+  }, [keyData]);
 
   const filteredActivity = useMemo(() => {
     if (!selectedDate) return activity;
@@ -42,24 +49,41 @@ export default function KeyDetailPage({ keyData, activity }: KeyDetailPageProps)
       {/* Header */}
       <header className="border-b border-zinc-800 bg-zinc-900/50 backdrop-blur-sm sticky top-0 z-10">
         <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <Link
-              href="/"
-              className="flex items-center gap-1.5 text-sm text-zinc-400 hover:text-white transition-colors"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              Dashboard
-            </Link>
-            <div className="w-px h-5 bg-zinc-700" />
-            <h1 className="text-lg font-semibold text-white truncate max-w-[300px]">
-              {keyData.name || 'Unnamed Key'}
-            </h1>
+          <div className="min-w-0">
+            <div className="flex items-center gap-3">
+              <Link
+                href="/"
+                className="flex items-center gap-1.5 text-sm text-zinc-400 hover:text-white transition-colors"
+              >
+                <ArrowLeft className="w-4 h-4" />
+                Dashboard
+              </Link>
+              <div className="w-px h-5 bg-zinc-700" />
+              <h1 className="text-lg font-semibold text-white truncate max-w-[300px]">
+                {keyData.name || 'Unnamed Key'}
+              </h1>
+            </div>
+            <p className="text-[11px] text-zinc-500 mt-0.5 ml-[72px]">
+              Last updated: {lastRefresh.toLocaleTimeString()}
+            </p>
           </div>
-          {keyData.disabled ? (
-            <Badge variant="outline" className="border-red-500/50 text-red-400 bg-red-500/10">Disabled</Badge>
-          ) : (
-            <Badge variant="outline" className="border-emerald-500/50 text-emerald-400 bg-emerald-500/10">Active</Badge>
-          )}
+          <div className="flex items-center gap-2">
+            {onSync && (
+              <button
+                onClick={onSync}
+                disabled={syncing}
+                className="p-1.5 rounded-md text-zinc-400 hover:text-white hover:bg-zinc-800 transition-colors disabled:opacity-50"
+                title="Refresh data"
+              >
+                <RefreshCw className={`w-4 h-4 ${syncing ? 'animate-spin' : ''}`} />
+              </button>
+            )}
+            {keyData.disabled ? (
+              <Badge variant="outline" className="border-red-500/50 text-red-400 bg-red-500/10">Disabled</Badge>
+            ) : (
+              <Badge variant="outline" className="border-emerald-500/50 text-emerald-400 bg-emerald-500/10">Active</Badge>
+            )}
+          </div>
         </div>
       </header>
 
