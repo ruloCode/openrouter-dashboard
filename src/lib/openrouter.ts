@@ -67,6 +67,38 @@ export async function deleteKey(token: string, hash: string): Promise<void> {
   if (!res.ok) throw new Error(`Failed to delete key: ${res.statusText}`);
 }
 
+// Activity API
+export interface ActivityItem {
+  date: string;
+  model: string;
+  model_permaslug: string;
+  endpoint_id: string;
+  provider_name: string;
+  usage: number;
+  byok_usage_inference: number;
+  requests: number;
+  prompt_tokens: number;
+  completion_tokens: number;
+  reasoning_tokens: number;
+}
+
+export async function getActivity(token: string, date?: string): Promise<{ data: ActivityItem[] }> {
+  const params = date ? `?date=${date}` : '';
+  const res = await fetch(`https://openrouter.ai/api/v1/activity${params}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  if (!res.ok) throw new Error(`Failed to fetch activity: ${res.statusText}`);
+  return res.json();
+}
+
+export async function getKeyByHash(token: string, hash: string): Promise<{ data: ApiKey }> {
+  const res = await fetch(`${OPENROUTER_API_BASE}/${hash}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  if (!res.ok) throw new Error(`Failed to fetch key: ${res.statusText}`);
+  return res.json();
+}
+
 // Credits API
 export const OPENROUTER_CREDITS_URL = 'https://openrouter.ai/api/v1/credits';
 

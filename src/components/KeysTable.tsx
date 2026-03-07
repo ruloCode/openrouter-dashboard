@@ -1,9 +1,11 @@
 'use client';
 
+import Link from 'next/link';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { ApiKey } from '@/lib/openrouter';
+import { slugify } from '@/lib/utils';
 import { Edit2, Trash2 } from 'lucide-react';
 
 interface KeysTableProps {
@@ -58,7 +60,16 @@ export default function KeysTable({ keys, onEdit, onDelete }: KeysTableProps) {
         <TableBody>
           {keys.map((key) => (
             <TableRow key={key.hash} className="border-zinc-800 hover:bg-zinc-800/40">
-              <TableCell className="text-white font-medium max-w-[150px] truncate">{key.name || '—'}</TableCell>
+              <TableCell className="font-medium max-w-[150px] truncate">
+                {key.name ? (
+                  <Link
+                    href={`/${slugify(key.name)}`}
+                    className="text-white hover:text-violet-400 transition-colors"
+                  >
+                    {key.name}
+                  </Link>
+                ) : '—'}
+              </TableCell>
               <TableCell className="font-mono text-xs text-zinc-400">{maskLabel(key.label)}</TableCell>
               <TableCell>
                 {key.disabled ? (

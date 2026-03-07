@@ -1,0 +1,374 @@
+- generic [active] [ref=e1]:
+  - region "Notifications alt+T"
+  - generic [ref=e467]:
+    - banner [ref=e468]:
+      - generic [ref=e469]:
+        - generic [ref=e472]:
+          - link "Logo" [ref=e476] [cursor=pointer]:
+            - /url: https://openrouter.ai/
+            - img "Logo" [ref=e477]
+          - generic [ref=e479]:
+            - button "Search" [ref=e480]:
+              - img
+              - text: Search
+              - generic [ref=e482]: /
+            - button "Ask AI" [ref=e483] [cursor=pointer]:
+              - generic [ref=e484]:
+                - generic [ref=e485]: Ask AI
+                - img [ref=e486]
+          - navigation "Navbar links" [ref=e488]:
+            - link "Models" [ref=e489] [cursor=pointer]:
+              - /url: https://openrouter.ai/models
+              - generic [ref=e491]: Models
+            - link "Chat" [ref=e492] [cursor=pointer]:
+              - /url: https://openrouter.ai/chat
+              - generic [ref=e494]: Chat
+            - link "Rankings" [ref=e495] [cursor=pointer]:
+              - /url: https://openrouter.ai/rankings
+              - generic [ref=e497]: Rankings
+            - link "Docs" [ref=e498] [cursor=pointer]:
+              - /url: /docs/api-reference/overview
+              - generic [ref=e500]: Docs
+            - button [ref=e501]:
+              - img
+        - tablist [ref=e504]:
+          - tab "Docs" [ref=e505] [cursor=pointer]:
+            - img [ref=e506]
+            - generic [ref=e508]: Docs
+          - tab "API Reference" [selected] [ref=e509] [cursor=pointer]:
+            - img [ref=e510]
+            - generic [ref=e512]: API Reference
+          - tab "SDK Reference" [ref=e513] [cursor=pointer]:
+            - img [ref=e514]
+            - generic [ref=e516]: SDK Reference
+    - main [ref=e517]:
+      - complementary [ref=e518]:
+        - list [ref=e522]:
+          - listitem [ref=e523]:
+            - generic [ref=e524]:
+              - img [ref=e525]
+              - generic [ref=e527]: API Guides
+            - list [ref=e528]:
+              - listitem [ref=e529]:
+                - link "Overview" [ref=e530] [cursor=pointer]:
+                  - /url: /docs/api/reference/overview
+                  - img [ref=e531]
+                  - generic [ref=e533]: Overview
+              - listitem [ref=e534]:
+                - link "Streaming" [ref=e535] [cursor=pointer]:
+                  - /url: /docs/api/reference/streaming
+                  - img [ref=e536]
+                  - generic [ref=e538]: Streaming
+              - listitem [ref=e539]:
+                - link "Embeddings" [ref=e540] [cursor=pointer]:
+                  - /url: /docs/api/reference/embeddings
+                  - img [ref=e541]
+                  - generic [ref=e543]: Embeddings
+              - listitem [ref=e544]:
+                - link "Limits" [ref=e545] [cursor=pointer]:
+                  - /url: /docs/api/reference/limits
+                  - img [ref=e546]
+                  - generic [ref=e548]: Limits
+              - listitem [ref=e549]:
+                - link "Authentication" [ref=e550] [cursor=pointer]:
+                  - /url: /docs/api/reference/authentication
+                  - img [ref=e551]
+                  - generic [ref=e553]: Authentication
+              - listitem [ref=e554]:
+                - link "Parameters" [ref=e555] [cursor=pointer]:
+                  - /url: /docs/api/reference/parameters
+                  - img [ref=e556]
+                  - generic [ref=e558]: Parameters
+              - listitem [ref=e559]:
+                - link "Errors and Debugging" [ref=e560] [cursor=pointer]:
+                  - /url: /docs/api/reference/errors-and-debugging
+                  - img [ref=e561]
+                  - generic [ref=e563]: Errors and Debugging
+              - listitem [ref=e564]:
+                - button "Responses API" [ref=e566]:
+                  - img [ref=e567]
+                  - generic [ref=e569]: Responses API
+                  - img [ref=e570]
+          - listitem [ref=e572]:
+            - generic [ref=e573]:
+              - img [ref=e574]
+              - generic [ref=e576]: API Reference
+            - list [ref=e577]:
+              - listitem [ref=e578]:
+                - button "Responses" [ref=e580]:
+                  - generic [ref=e581]: Responses
+                  - img [ref=e582]
+              - listitem [ref=e584]:
+                - button "OAuth" [ref=e586]:
+                  - generic [ref=e587]: OAuth
+                  - img [ref=e588]
+              - listitem [ref=e590]:
+                - button "Anthropic Messages" [ref=e592]:
+                  - generic [ref=e593]: Anthropic Messages
+                  - img [ref=e594]
+              - listitem [ref=e596]:
+                - generic [ref=e597]:
+                  - button "Analytics" [ref=e598]:
+                    - generic [ref=e599]: Analytics
+                    - img [ref=e600]
+                  - list [ref=e602]:
+                    - listitem [ref=e603]:
+                      - link "GET Get user activity grouped by endpoint" [ref=e604] [cursor=pointer]:
+                        - /url: /docs/api/api-reference/analytics/get-user-activity
+                        - generic [ref=e605]: GET
+                        - generic [ref=e607]: Get user activity grouped by endpoint
+              - listitem [ref=e608]:
+                - button "Chat" [ref=e610]:
+                  - generic [ref=e611]: Chat
+                  - img [ref=e612]
+              - listitem [ref=e614]:
+                - button "Credits" [ref=e616]:
+                  - generic [ref=e617]: Credits
+                  - img [ref=e618]
+              - listitem [ref=e620]:
+                - button "Embeddings" [ref=e622]:
+                  - generic [ref=e623]: Embeddings
+                  - img [ref=e624]
+              - listitem [ref=e626]:
+                - button "Generations" [ref=e628]:
+                  - generic [ref=e629]: Generations
+                  - img [ref=e630]
+              - listitem [ref=e632]:
+                - button "Models" [ref=e634]:
+                  - generic [ref=e635]: Models
+                  - img [ref=e636]
+              - listitem [ref=e638]:
+                - button "Endpoints" [ref=e640]:
+                  - generic [ref=e641]: Endpoints
+                  - img [ref=e642]
+              - listitem [ref=e644]:
+                - button "Providers" [ref=e646]:
+                  - generic [ref=e647]: Providers
+                  - img [ref=e648]
+              - listitem [ref=e650]:
+                - button "API Keys" [ref=e652]:
+                  - generic [ref=e653]: API Keys
+                  - img [ref=e654]
+              - listitem [ref=e656]:
+                - button "Guardrails" [ref=e658]:
+                  - generic [ref=e659]: Guardrails
+                  - img [ref=e660]
+      - generic [ref=e664]:
+        - article [ref=e665]:
+          - generic [ref=e666]:
+            - generic [ref=e668]:
+              - link "API Reference" [ref=e669] [cursor=pointer]:
+                - /url: /docs/api/api-reference/responses/create-responses
+              - img [ref=e670]
+              - link "Analytics" [ref=e672] [cursor=pointer]:
+                - /url: /docs/api/api-reference/analytics/get-user-activity
+            - generic [ref=e673]:
+              - heading "Get user activity grouped by endpoint" [level=1] [ref=e676]
+              - generic [ref=e678]:
+                - button "Copy page" [ref=e679] [cursor=pointer]:
+                  - generic [ref=e682]:
+                    - img [ref=e683]
+                    - generic [ref=e686]: Copy page
+                - button [ref=e687] [cursor=pointer]:
+                  - img [ref=e690]
+            - generic [ref=e693]:
+              - generic [ref=e694]: GET
+              - generic [ref=e698]:
+                - generic [ref=e701] [cursor=pointer]: https://openrouter.ai/api/v1
+                - text: /activity
+          - generic [ref=e702]:
+            - complementary [ref=e703]:
+              - generic [ref=e704]:
+                - generic [ref=e705]:
+                  - generic [ref=e707]:
+                    - generic [ref=e710]:
+                      - generic [ref=e711]: GET
+                      - generic [ref=e715] [cursor=pointer]: /api/v1/activity
+                    - generic [ref=e716]:
+                      - button "cURL" [ref=e718] [cursor=pointer]:
+                        - generic [ref=e719]:
+                          - img [ref=e720]
+                          - generic [ref=e722]: cURL
+                          - img [ref=e723]
+                      - button [ref=e725]:
+                        - img
+                      - button "Ask AI" [ref=e726] [cursor=pointer]:
+                        - img [ref=e728]
+                  - table [ref=e736]:
+                    - rowgroup [ref=e740]:
+                      - row "$ curl https://openrouter.ai/api/v1/activity \\" [ref=e741]:
+                        - cell "$" [ref=e742]
+                        - cell "curl https://openrouter.ai/api/v1/activity \\" [ref=e743]:
+                          - generic [ref=e744]: curl https://openrouter.ai/api/v1/activity \
+                      - 'row "> -H \"Authorization: Bearer <token>\"" [ref=e745]':
+                        - cell ">" [ref=e746]
+                        - 'cell "-H \"Authorization: Bearer <token>\"" [ref=e747]':
+                          - generic [ref=e748]: "-H \"Authorization: Bearer <token>\""
+                  - button "Try it" [ref=e751]:
+                    - img
+                    - text: Try it
+                - generic [ref=e752]:
+                  - generic [ref=e754]:
+                    - combobox [ref=e756] [cursor=pointer]:
+                      - generic [ref=e757]:
+                        - generic [ref=e758]:
+                          - generic:
+                            - generic:
+                              - generic: "200"
+                              - generic: Retrieved
+                        - img [ref=e760]
+                    - generic [ref=e762]:
+                      - button [ref=e763]:
+                        - img
+                      - button "Ask AI" [ref=e764] [cursor=pointer]:
+                        - img [ref=e766]
+                  - table [ref=e774]:
+                    - rowgroup [ref=e778]:
+                      - 'row "1 {" [ref=e779]':
+                        - cell "1" [ref=e780]
+                        - 'cell "{" [ref=e781]':
+                          - generic [ref=e782]: "{"
+                      - 'row "2 \"data\": [" [ref=e783]':
+                        - cell "2" [ref=e784]
+                        - 'cell "\"data\": [" [ref=e785]':
+                          - generic [ref=e786]: "\"data\": ["
+                      - 'row "3 {" [ref=e787]':
+                        - cell "3" [ref=e788]
+                        - 'cell "{" [ref=e789]':
+                          - generic [ref=e790]: "{"
+                      - 'row "4 \"date\": \"2025-08-24\"," [ref=e791]':
+                        - cell "4" [ref=e792]
+                        - 'cell "\"date\": \"2025-08-24\"," [ref=e793]':
+                          - generic [ref=e794]: "\"date\": \"2025-08-24\","
+                      - 'row "5 \"model\": \"openai/gpt-4.1\"," [ref=e795]':
+                        - cell "5" [ref=e796]
+                        - 'cell "\"model\": \"openai/gpt-4.1\"," [ref=e797]':
+                          - generic [ref=e798]: "\"model\": \"openai/gpt-4.1\","
+                      - 'row "6 \"model_permaslug\": \"openai/gpt-4.1-2025-04-14\"," [ref=e799]':
+                        - cell "6" [ref=e800]
+                        - 'cell "\"model_permaslug\": \"openai/gpt-4.1-2025-04-14\"," [ref=e801]':
+                          - generic [ref=e802]: "\"model_permaslug\": \"openai/gpt-4.1-2025-04-14\","
+                      - 'row "7 \"endpoint_id\": \"550e8400-e29b-41d4-a716-446655440000\"," [ref=e803]':
+                        - cell "7" [ref=e804]
+                        - 'cell "\"endpoint_id\": \"550e8400-e29b-41d4-a716-446655440000\"," [ref=e805]':
+                          - generic [ref=e806]: "\"endpoint_id\": \"550e8400-e29b-41d4-a716-446655440000\","
+                      - 'row "8 \"provider_name\": \"OpenAI\"," [ref=e807]':
+                        - cell "8" [ref=e808]
+                        - 'cell "\"provider_name\": \"OpenAI\"," [ref=e809]':
+                          - generic [ref=e810]: "\"provider_name\": \"OpenAI\","
+                      - 'row "9 \"usage\": 0.015," [ref=e811]':
+                        - cell "9" [ref=e812]
+                        - 'cell "\"usage\": 0.015," [ref=e813]':
+                          - generic [ref=e814]: "\"usage\": 0.015,"
+                      - 'row "10 \"byok_usage_inference\": 0.012," [ref=e815]':
+                        - cell "10" [ref=e816]
+                        - 'cell "\"byok_usage_inference\": 0.012," [ref=e817]':
+                          - generic [ref=e818]: "\"byok_usage_inference\": 0.012,"
+                      - 'row "11 \"requests\": 5," [ref=e819]':
+                        - cell "11" [ref=e820]
+                        - 'cell "\"requests\": 5," [ref=e821]':
+                          - generic [ref=e822]: "\"requests\": 5,"
+                      - 'row "12 \"prompt_tokens\": 50," [ref=e823]':
+                        - cell "12" [ref=e824]
+                        - 'cell "\"prompt_tokens\": 50," [ref=e825]':
+                          - generic [ref=e826]: "\"prompt_tokens\": 50,"
+                      - 'row "13 \"completion_tokens\": 125," [ref=e827]':
+                        - cell "13" [ref=e828]
+                        - 'cell "\"completion_tokens\": 125," [ref=e829]':
+                          - generic [ref=e830]: "\"completion_tokens\": 125,"
+                      - 'row "14 \"reasoning_tokens\": 25" [ref=e831]':
+                        - cell "14" [ref=e832]
+                        - 'cell "\"reasoning_tokens\": 25" [ref=e833]':
+                          - generic [ref=e834]: "\"reasoning_tokens\": 25"
+                      - 'row "15 }" [ref=e835]':
+                        - cell "15" [ref=e836]
+                        - 'cell "}" [ref=e837]':
+                          - generic [ref=e838]: "}"
+                      - row "16 ]" [ref=e839]:
+                        - cell "16" [ref=e840]
+                        - cell "]" [ref=e841]:
+                          - generic [ref=e842]: "]"
+                      - 'row "17 }" [ref=e843]':
+                        - cell "17" [ref=e844]
+                        - 'cell "}" [ref=e845]':
+                          - generic [ref=e846]: "}"
+            - generic [ref=e853]:
+              - paragraph [ref=e855]:
+                - text: Returns user activity data grouped by endpoint for the last 30 (completed) UTC days.
+                - link "Management key" [ref=e856] [cursor=pointer]:
+                  - /url: /docs/guides/overview/auth/management-api-keys
+                - text: required.
+              - generic [ref=e857]:
+                - heading "Authentication" [level=3] [ref=e859]
+                - generic [ref=e861]:
+                  - generic [ref=e862]:
+                    - generic [ref=e863]: Authorization
+                    - generic [ref=e864]: Bearer
+                  - generic [ref=e865]: API key as bearer token in Authorization header
+              - generic [ref=e866]:
+                - heading "Query parameters" [level=3] [ref=e868]
+                - generic [ref=e869]:
+                  - generic [ref=e870]:
+                    - generic [ref=e871]: date
+                    - generic [ref=e872]:
+                      - generic [ref=e873]: string
+                      - generic [ref=e874]: Optional
+                  - paragraph [ref=e876]: Filter by a single UTC date in the last 30 days (YYYY-MM-DD format).
+              - generic [ref=e877]:
+                - heading "Response" [level=3] [ref=e879]
+                - generic [ref=e880]: Returns user activity data grouped by endpoint
+                - generic [ref=e881]:
+                  - generic [ref=e882]:
+                    - generic [ref=e883]: data
+                    - generic [ref=e885]: list of objects
+                  - generic [ref=e886]: List of activity items
+                  - button "Show 11 properties" [ref=e889] [cursor=pointer]:
+                    - generic [ref=e890]:
+                      - img [ref=e891]
+                      - generic [ref=e894]: Show 11 properties
+              - generic [ref=e895]:
+                - heading "Errors" [level=3] [ref=e897]
+                - generic [ref=e898]:
+                  - button "400 Bad Request Error" [ref=e899]:
+                    - generic [ref=e900]:
+                      - generic [ref=e901]: "400"
+                      - generic [ref=e902]: Bad Request Error
+                  - button "401 Unauthorized Error" [ref=e903]:
+                    - generic [ref=e904]:
+                      - generic [ref=e905]: "401"
+                      - generic [ref=e906]: Unauthorized Error
+                  - button "403 Forbidden Error" [ref=e907]:
+                    - generic [ref=e908]:
+                      - generic [ref=e909]: "403"
+                      - generic [ref=e910]: Forbidden Error
+                  - button "500 Internal Server Error" [ref=e911]:
+                    - generic [ref=e912]:
+                      - generic [ref=e913]: "500"
+                      - generic [ref=e914]: Internal Server Error
+        - generic [ref=e915]:
+          - generic [ref=e919]:
+            - generic [ref=e920]: Was this page helpful?
+            - generic [ref=e921]:
+              - button "Yes" [ref=e922]:
+                - img
+                - text: "Yes"
+              - button "No" [ref=e923]:
+                - img
+                - text: "No"
+          - navigation "Up next" [ref=e924]:
+            - link "Previous" [ref=e925] [cursor=pointer]:
+              - /url: /docs/api/api-reference/anthropic-messages/create-messages
+              - img [ref=e926]
+              - generic [ref=e928]: Previous
+            - link "Create a chat completion Next" [ref=e929] [cursor=pointer]:
+              - /url: /docs/api/api-reference/chat/send-chat-completion-request
+              - heading "Create a chat completion" [level=4] [ref=e931]
+              - generic [ref=e932]:
+                - generic [ref=e933]: Next
+                - img [ref=e934]
+          - link "Built with" [ref=e936] [cursor=pointer]:
+            - /url: https://buildwithfern.com/?utm_campaign=buildWith&utm_medium=docs&utm_source=openrouter.ai
+            - generic [ref=e937]: Built with
+            - img [ref=e938]
+    - contentinfo
+  - alert [ref=e941]

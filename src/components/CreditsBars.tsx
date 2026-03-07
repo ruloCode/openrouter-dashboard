@@ -1,7 +1,9 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 import { ApiKey, CreditsData } from '@/lib/openrouter';
+import { slugify } from '@/lib/utils';
 import { Infinity as InfinityIcon } from 'lucide-react';
 
 interface CreditsBarProps {
@@ -245,9 +247,19 @@ export default function CreditsBars({ keys, credits }: CreditsBarProps) {
 
                 {/* Key name + badge */}
                 <div className="flex items-center justify-between gap-2">
-                  <p className="text-sm font-semibold text-white truncate flex-1" title={key.name}>
-                    {key.name || key.label || 'Unnamed Key'}
-                  </p>
+                  {key.name ? (
+                    <Link
+                      href={`/${slugify(key.name)}`}
+                      className="text-sm font-semibold text-white truncate flex-1 hover:text-violet-400 transition-colors"
+                      title={key.name}
+                    >
+                      {key.name}
+                    </Link>
+                  ) : (
+                    <p className="text-sm font-semibold text-white truncate flex-1">
+                      {key.label || 'Unnamed Key'}
+                    </p>
+                  )}
                   <span
                     className={`shrink-0 text-[10px] font-bold uppercase tracking-wide px-2 py-0.5 rounded-full border ${
                       key.disabled
